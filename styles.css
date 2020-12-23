@@ -1,0 +1,53 @@
+body, html {
+    margin: 0px;
+    padding: 0px;
+}
+
+h1 {
+    margin: 0px;
+}
+
+.container {
+    background-color: palegreen;
+    margin: 0px 10%;
+    text-align: center;
+    
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(7, 100px);
+    grid-template-areas: 
+        'HN1 HN1 HN1 HN1 HN1'
+        'GWS GWS GWS TPS TPS'
+        'GWS GWS GWS TPS TPS'
+        'GWS GWS GWS TPS TPS'
+        'KBA KBA KBA TPS TPS'
+        'KBA KBA KBA TPS TPS';
+}
+
+.header-row {
+    grid-area: HN1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.guessWord {
+    grid-area: GWS;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.triesSection {
+    grid-area: TPS;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.keyboard {
+    grid-area: KBA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

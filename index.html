@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+    
+<!-- Within the body tag we had onkeydown="letterPressed(event)" -->
+<!--  If the keyboard clicks are not working then we put that code back in the body tags  -->
+<body onkeydown="letterPressed(event)">
+    <div class="container">
+        <div class="header-row">
+            <h1>Hangman Tester</h1>
+        </div>
+        
+<!--
+        <h3>Your word is:</h3>
+        <p id="FullWord"></p>
+-->
+
+        <div class="guessWord">
+            <p id="guessWord"></p>
+        </div>
+
+        <div class="triesSection">
+            <img id="tryImage" src="images/Flower_6-6.png" alt="Flower 6-6" height="400">
+        </div>
+        
+        <div class="keyboard">
+            <button id="btnKeyA" onclick="testLetter('A')">A</button>
+            <button id="btnKeyB" onclick="testLetter('B')">B</button>
+            <button id="btnKeyC" onclick="testLetter('C')">C</button>
+            <button id="btnKeyD" onclick="testLetter('D')">D</button>
+            <button id="btnKeyE" onclick="testLetter('E')">E</button>
+            <button id="btnKeyF" onclick="testLetter('F')">F</button>
+            <button id="btnKeyG" onclick="testLetter('G')">G</button>
+            <button id="btnKeyH" onclick="testLetter('H')">H</button>
+            <button id="btnKeyI" onclick="testLetter('I')">I</button>
+            <button id="btnKeyJ" onclick="testLetter('J')">J</button>
+            <button id="btnKeyK" onclick="testLetter('K')">K</button>
+            <button id="btnKeyL" onclick="testLetter('L')">L</button>
+            <button id="btnKeyM" onclick="testLetter('M')">M</button>
+            <button id="btnKeyN" onclick="testLetter('N')">N</button>
+            <button id="btnKeyO" onclick="testLetter('O')">O</button>
+            <button id="btnKeyP" onclick="testLetter('P')">P</button>
+            <button id="btnKeyQ" onclick="testLetter('Q')">Q</button>
+            <button id="btnKeyR" onclick="testLetter('R')">R</button>
+            <button id="btnKeyS" onclick="testLetter('S')">S</button>
+            <button id="btnKeyT" onclick="testLetter('T')">T</button>
+            <button id="btnKeyU" onclick="testLetter('U')">U</button>
+            <button id="btnKeyV" onclick="testLetter('V')">V</button>
+            <button id="btnKeyW" onclick="testLetter('W')">W</button>
+            <button id="btnKeyX" onclick="testLetter('X')">X</button>
+            <button id="btnKeyY" onclick="testLetter('Y')">Y</button>
+            <button id="btnKeyZ" onclick="testLetter('Z')">Z</button>
+        </div>
+    </div>
+    
+    <!-- SCRIPT CODE BELOW :: This is where we make the magic happen -->
+    <script src="main.js"></script>
+    
+</body>
+</html>
