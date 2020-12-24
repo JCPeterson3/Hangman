@@ -1,10 +1,17 @@
 body, html {
     margin: 0px;
     padding: 0px;
+    
+    font-family: "Luckiest Guy", sans-serif;
 }
 
 h1 {
     margin: 0px;
+    font-size: 5em;
+}
+
+button {
+    font-family: "Luckiest Guy", sans-serif;
 }
 
 .container {
