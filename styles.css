@@ -28,6 +28,7 @@ button {
         'GWS GWS GWS TPS TPS'
         'GWS GWS GWS TPS TPS'
         'KBA KBA KBA TPS TPS'
+        'KBA KBA KBA TPS TPS'
         'KBA KBA KBA TPS TPS';
 }
 
@@ -45,6 +46,10 @@ button {
     align-items: center;
 }
 
+#guessWord {
+    font-size: 2em;
+}
+
 .triesSection {
     grid-area: TPS;
     display: flex;
@@ -54,7 +59,36 @@ button {
 
 .keyboard {
     grid-area: KBA;
-    display: flex;
+    background-color: blue;
     justify-content: center;
     align-items: center;
+}
+
+.keyboardButton {
+    position: relative;
+    display: inline;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: black;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: inherit;
+    font-size: 1.5em;
+    
+    padding: .5em 2em;
+    border: 2px solid rgb(106, 163, 137);
+    border-radius: 1em;
+/*    background: rgb(205, 255, 232);*/
+    
+    margin: 2px;
+}
+
+.keyboardButton:disabled,
+.keyboardButton[disabled] {
+    background-color: black;
+    color: green;
 }
