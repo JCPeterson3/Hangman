@@ -9,6 +9,7 @@ var strGuess = getMyEmptyWord(strWord);
 document.getElementById("guessWord").innerHTML = strGuess;
 var intFailedAttempts = 6;
 var currBtnValue = 64;
+var oneSwitchActivated = false;
 // Change every 3 seconds
 setInterval(changeButton, 1000);
 
@@ -28,20 +29,23 @@ setInterval(changeButton, 1000);
 //     getting it on the web and then slowly moving on to the MEAN stack, such as Angular and then another part so I can slowly learn
 //     how to actually be a Full Stack Developer.
 function changeButton() {
-    ++currBtnValue;
-    
-    // Change the presentation of our current button
-    document.getElementById("btn" + getCode(currBtnValue)).style.background = "#FF0000";
-    if (currBtnValue === 65){
-        // Set Z to grey
-        document.getElementById("btn" + getCode(90)).style.background = "#e7e7e7";
-    } else {
-        document.getElementById("btn" + getCode(currBtnValue - 1)).style.background = "#e7e7e7";
-    }
-    
-    // Set currBtnValue to before A's value if it is Z's value
-    if (currBtnValue === 90){
-        currBtnValue = 64;
+    if (oneSwitchActivated)
+    {
+        ++currBtnValue;
+
+        // Change the presentation of our current button
+        document.getElementById("btn" + getCode(currBtnValue)).style.background = "#FF0000";
+        if (currBtnValue === 65){
+            // Set Z to grey
+            document.getElementById("btn" + getCode(90)).style.background = "#e7e7e7";
+        } else {
+            document.getElementById("btn" + getCode(currBtnValue - 1)).style.background = "#e7e7e7";
+        }
+
+        // Set currBtnValue to before A's value if it is Z's value
+        if (currBtnValue === 90){
+            currBtnValue = 64;
+        }
     }
 }
 
@@ -138,6 +142,10 @@ function getCode(myCode) {
 function letterPressed(event) {
     // Use the letter pressed for finding the button
     var myBtn = "btn" + event.code;
+    
+    if (event.keyCode === 192){
+        oneSwitchActivated = !oneSwitchActivated;
+    }
     
     // Make the function call if the space bar is clicked
     if (event.keyCode === 32) {
