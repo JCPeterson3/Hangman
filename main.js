@@ -3,8 +3,12 @@
  */
 
 /* Gonna need to break down all of this and put it in the right order at some point. ugh... */
+/* NOTE (1/3/2021): Currently all the words must be in all caps or the code won't work -- need to fix this at a later date. */
 
-var strWord = "PASSWORD";
+const testArray = ["SUMMER", "WINTER", "FALL", "SPRING", "AUTUMN"];
+
+var wordsLeft = testArray;
+newWord();
 var strGuess = getMyEmptyWord(strWord);
 document.getElementById("guessWord").innerHTML = strGuess;
 var intFailedAttempts = 6;
@@ -12,6 +16,16 @@ var currBtnValue = 64;
 var oneSwitchActivated = false;
 // Change every 3 seconds
 setInterval(changeButton, 1000);
+
+// Modal Items are going here
+// Get the modal
+var modalDefeat = document.getElementById("modalDefeat");
+var modalVictory = document.getElementById("modalVictory");
+// Get the button that opens the modal -- This will be gone later and we will using something else to trigger the modal calls
+var btnDefeat = document.getElementById("btnDefeat");
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
 
 // This is what will change the focus of the currently selected button
 // We need to make a function to convert a number (such as 65) to its corresponding letter (A in this example)
@@ -200,11 +214,15 @@ function testLetter(cLetter)
             places += i + " ";
             //alert("k");
             bFound = true;
+            // Insert the letter we found into all the appropriate places
             insertLetter(i, cLetter);
         }
     }
     
-    //alert(places);
+    // Check to see if we won
+    if (!strGuess.includes("_")){
+        modalVictoryOn();
+    }
     
     // If the letter is no where to be found then update the misses
     if (!bFound) {
@@ -212,9 +230,8 @@ function testLetter(cLetter)
         var imgSrc = "images/Flower_" + intFailedAttempts + "-6.png";
         document.getElementById("tryImage").src = imgSrc;
         if (0 === intFailedAttempts) {
-            alert("OH NO YOU HAVE USED ALL YOUR TRIES. Sorry.");
+            modalDefeatOn();
             // Use this for now to disable all the buttons
-            disableAllButtons();
         }
     }
     
@@ -229,6 +246,7 @@ function insertLetter(intIndex, cLetter)
     //alert(strGuess.substring(0, intIndex) + cLetter + strGuess.substring((intIndex+1), strGuess.length));
     strGuess = strGuess.substring(0, intIndex) + cLetter + strGuess.substring((intIndex+1), strGuess.length);
     setGuessWord(strGuess);
+    
 }
 
 function setGuessWord(str)
@@ -236,110 +254,209 @@ function setGuessWord(str)
     document.getElementById("guessWord").innerHTML = str;
 }
 
+/* MODAL CODE SECTION */
+// When the user clicks the button, open the modal 
+function modalDefeatOn() {
+    modalDefeat.style.display = "block";
+    document.getElementById("strDefeat").innerHTML = "You missed it this time. <br>The word was: <u>" + strWord + "</u>";
+}
+
+function modalVictoryOn() {
+    modalVictory.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+function modalOff() {
+    if (modalVictory.style.display == "block"){
+        newWord();
+        modalVictory.style.display = "none";
+    } else {
+        modalDefeat.style.display = "none";
+        disableAllButtons();
+    }
+}
+
+
 // This will be used to disable all the buttons. We might not need this button later, but we will need to figure
 //      out what to do after you lose.
 function disableAllButtons() {
     // btnA
-    var button = document.getElementById("btnKeyA");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyA").disabled = true;
     
     // btnB
-    var button = document.getElementById("btnKeyB");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyB").disabled = true;
     
     // btnC
-    var button = document.getElementById("btnKeyC");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyC").disabled = true;
     
     // btnD
-    var button = document.getElementById("btnKeyD");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyD").disabled = true;;
     
     // btnE
-    var button = document.getElementById("btnKeyE");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyE").disabled = true;
     
     // btnF
-    var button = document.getElementById("btnKeyF");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyF").disabled = true;
     
     // btnG
-    var button = document.getElementById("btnKeyG");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyG").disabled = true;
     
     // btnH
-    var button = document.getElementById("btnKeyH");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyH").disabled = true;
     
     // btnI
-    var button = document.getElementById("btnKeyI");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyI").disabled = true;
     
     // btnJ
-    var button = document.getElementById("btnKeyJ");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyJ").disabled = true;
     
     // btnK
-    var button = document.getElementById("btnKeyK");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyK").disabled = true;
     
     // btnL
-    var button = document.getElementById("btnKeyL");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyL").disabled = true;
     
     // btnM
-    var button = document.getElementById("btnKeyM");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyM").disabled = true;
     
     // btnN
-    var button = document.getElementById("btnKeyN");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyN").disabled = true;
     
     // btnO
-    var button = document.getElementById("btnKeyO");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyO").disabled = true;
     
     // btnP
-    var button = document.getElementById("btnKeyP");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyP").disabled = true;
     
     // btnQ
-    var button = document.getElementById("btnKeyQ");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyQ").disabled = true;
     
     // btnR
-    var button = document.getElementById("btnKeyR");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyR").disabled = true;
     
     // btnS
-    var button = document.getElementById("btnKeyS");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyS").disabled = true;
     
     // btnT
-    var button = document.getElementById("btnKeyT");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyT").disabled = true;
     
     // btnU
-    var button = document.getElementById("btnKeyU");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyU").disabled = true;
     
     // btnV
-    var button = document.getElementById("btnKeyV");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyV").disabled = true;
     
     // btnW
-    var button = document.getElementById("btnKeyW");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyW").disabled = true;
     
     // btnX
-    var button = document.getElementById("btnKeyX");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyX").disabled = true;
     
     // btnY
-    var button = document.getElementById("btnKeyY");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyY").disabled = true;
     
     // btnZ
-    var button = document.getElementById("btnKeyZ");
-    button.setAttribute("disabled", "disabled");
+    document.getElementById("btnKeyZ").disabled = true;
+}
+
+// This will be used to enable all the buttons. We might not need this button later, but we will need to figure
+//      out what to do after you lose.
+function enableAllButtons() {
+    // btnA
+    document.getElementById("btnKeyA").disabled = false;
+    
+    // btnB
+    document.getElementById("btnKeyB").disabled = false;
+    
+    // btnC
+    document.getElementById("btnKeyC").disabled = false;
+    
+    // btnD
+    document.getElementById("btnKeyD").disabled = false;
+    
+    // btnE
+    document.getElementById("btnKeyE").disabled = false;
+    
+    // btnF
+    document.getElementById("btnKeyF").disabled = false;
+    
+    // btnG
+    document.getElementById("btnKeyG").disabled = false;
+    
+    // btnH
+    document.getElementById("btnKeyH").disabled = false;
+    
+    // btnI
+    document.getElementById("btnKeyI").disabled = false;
+    
+    // btnJ
+    document.getElementById("btnKeyJ").disabled = false;
+    
+    // btnK
+    document.getElementById("btnKeyK").disabled = false;
+    
+    // btnL
+    document.getElementById("btnKeyL").disabled = false;
+    
+    // btnM
+    document.getElementById("btnKeyM").disabled = false;
+    
+    // btnN
+    document.getElementById("btnKeyN").disabled = false;
+    
+    // btnO
+    document.getElementById("btnKeyO").disabled = false;
+    
+    // btnP
+    document.getElementById("btnKeyP").disabled = false;
+    
+    // btnQ
+    document.getElementById("btnKeyQ").disabled = false;
+    
+    // btnR
+    document.getElementById("btnKeyR").disabled = false;
+    
+    // btnS
+    document.getElementById("btnKeyS").disabled = false;
+    
+    // btnT
+    document.getElementById("btnKeyT").disabled = false;
+    
+    // btnU
+    document.getElementById("btnKeyU").disabled = false;
+    
+    // btnV
+    document.getElementById("btnKeyV").disabled = false;
+    
+    // btnW
+    document.getElementById("btnKeyW").disabled = false;
+    
+    // btnX
+    document.getElementById("btnKeyX").disabled = false;
+    
+    // btnY
+    document.getElementById("btnKeyY").disabled = false;
+    
+    // btnZ
+    document.getElementById("btnKeyZ").disabled = false;
+}
+
+/* On to the new word */
+function newWord() {
+    // Reset all the buttons
+    enableAllButtons();
+    
+    // Get the new word and remove the last word from the list
+//    strWord = nextWord;
+    
+    strWord = wordsLeft[0];
+    strGuess = getMyEmptyWord(strWord);
+    
+    // Reset our GuessWord (strGuess), Tries (intFailedAttempts), and OneSwitch Counter (currBtnValue)
+    setGuessWord(strGuess);
+    intFailedAttempts = 6;
+    currBtnValue = 64;
+    
+    // Reset the picture
+    document.getElementById("tryImage").src = "images/Flower_" + intFailedAttempts + "-6.png";
 }
