@@ -17,6 +17,19 @@
 <!-- Within the body tag we had onkeydown="letterPressed(event)" -->
 <!--  If the keyboard clicks are not working then we put that code back in the body tags  -->
 <body onkeydown="letterPressed(event)">
+    
+    
+    <form>  
+        <label> Choose a Category: </label>  
+        <select id="categorySelector">
+            <option value = "Seasons"> Seasons </option>
+            <option value = "Numbers"> Numbers </option>
+            <option value = "Colors"> Colors </option>
+            <option value = "States"> States </option>
+        </select>
+        <input type="button" onclick="startRound()" value="Start Round">
+    </form>
+    
     <div class="container">
         
         <!-- Modals have to go here, so they can be guided to where we wish to put them. -->
@@ -30,7 +43,7 @@
         <div id="modalVictory" class="modal" onclick="modalOff()">
             <div class="modal-content">
                 <span class="close" onclick="modalOff()">&times;</span>
-                <p id="strDefeat">Good Job! You have found the word!</p>
+                <p id="strVictory">Good Job! You have found the word!</p>
             </div>
         </div>
         
@@ -39,11 +52,6 @@
             <h1>Hangman Tester</h1>
         </div>
         
-<!--
-        <h3>Your word is:</h3>
-        <p id="FullWord"></p>
--->
-
         <div class="guessWord">
             <p id="guessWord"></p>
         </div>

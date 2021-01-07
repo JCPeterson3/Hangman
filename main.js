@@ -5,15 +5,19 @@
 /* Gonna need to break down all of this and put it in the right order at some point. ugh... */
 /* NOTE (1/3/2021): Currently all the words must be in all caps or the code won't work -- need to fix this at a later date. */
 
-const testArray = ["SUMMER", "WINTER", "FALL", "SPRING", "AUTUMN"];
+const objCategorySeasons = {name: "Seasons", words: ["SUMMER", "WINTER", "FALL", "SPRING", "AUTUMN"]};
+const objCategoryNumbers = {name: "Numbers", words: ["ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN"]};
+const objCategoryColors = {name: "Colors", words: ["RED", "YELLOW", "BLUE", "GREEN", "WHITE", "BROWN", "PINK", "ORANGE", "PURPLE", "TOURQUOISE", "TAN", "BLACK", "BEIGE", "GREY", "VIOLET", "MAROON"]};
+const objCategoryStates = {name: "States", words: ["ALABAMA"], ["ALASKA"], ["ARIZONA"], ["ARKANSAS"], ["CALIFORNIA"], ["COLORADO"], ["CONNECTICUT"], ["DELAWARE"], ["FLORIDA"], ["GEORGIA"], ["HAWAII"], ["IDAHO"], ["ILLINOIS"], ["INDIANA"], ["IOWA"], ["KANSAS"], ["KENTUCKY"], ["LOUISIANA"], ["MAINE"], ["MARYLAND"], ["MASSACHUSETTS"], ["MICHIGAN"], ["MINNESOTA"], ["MISSISSIPPI"], ["MISSOURI"], ["MONTANA"], ["NEBRASKA"], ["NEVADA"], ["NEW HAMPSHIRE"], ["NEW JERSEY"], ["NEW MEXICO"], ["NEW YORK"], ["NORTH CAROLINA"], ["NORTH DAKOTA"], ["OHIO"], ["OKLAHOMA"], ["OREGON"], ["PENNSYLVANIA"], ["RHODE ISLAND"], ["SOUTH CAROLINA"], ["SOUTH DAKOTA"], ["TENNESSEE"], ["TEXAS"], ["UTAH"], ["VERMONT"], ["VIRGINIA"], ["WASHINGTON"], ["WEST VIRGINIA"], ["WISCONSIN"], ["WYOMING"]};
 
-var wordsLeft = testArray;
-newWord();
+let wordsLeft = objCategorySeasons.words.slice(0);
+var strWord = getRandomWord(0, wordsLeft.length);
 var strGuess = getMyEmptyWord(strWord);
 document.getElementById("guessWord").innerHTML = strGuess;
 var intFailedAttempts = 6;
 var currBtnValue = 64;
 var oneSwitchActivated = false;
+var endRound = false;
 // Change every 3 seconds
 setInterval(changeButton, 1000);
 
@@ -25,6 +29,9 @@ var modalVictory = document.getElementById("modalVictory");
 var btnDefeat = document.getElementById("btnDefeat");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
+// Get our elements here I guess.
+//document.getElementById("guessWord").innerHTML = strGuess;
+
 
 
 // This is what will change the focus of the currently selected button
@@ -48,12 +55,13 @@ function changeButton() {
         ++currBtnValue;
 
         // Change the presentation of our current button
-        document.getElementById("btn" + getCode(currBtnValue)).style.background = "#FF0000";
+        document.getElementById("btn" + getCode(currBtnValue)).style.backgroundColor = "#FF0000";
+        //document.getElementById("btn" + getCode(currBtnValue)).hover = true;
         if (currBtnValue === 65){
             // Set Z to grey
-            document.getElementById("btn" + getCode(90)).style.background = "#e7e7e7";
+            document.getElementById("btn" + getCode(90)).style.backgroundColor = "#e7e7e7";
         } else {
-            document.getElementById("btn" + getCode(currBtnValue - 1)).style.background = "#e7e7e7";
+            document.getElementById("btn" + getCode(currBtnValue - 1)).style.backgroundColor = "#e7e7e7";
         }
 
         // Set currBtnValue to before A's value if it is Z's value
@@ -61,6 +69,52 @@ function changeButton() {
             currBtnValue = 64;
         }
     }
+}
+
+function startRound() {
+    // Restarting the round, so we must reset the endRound to false
+    endRound = false;
+    
+    setWordsLeft(document.getElementById("categorySelector").value);
+    
+    // Get and set the new word
+    strWord = getRandomWord(0, wordsLeft.length);
+    strGuess = getMyEmptyWord(strWord);
+    
+    // Reset all the buttons
+    enableAllButtons();
+    
+    // Reset our GuessWord (strGuess), Tries (intFailedAttempts), and OneSwitch Counter (currBtnValue)
+    setGuessWord(strGuess);
+    intFailedAttempts = 6;
+    currBtnValue = 64;
+    
+    // Reset the picture
+    document.getElementById("tryImage").src = "images/Flower_" + intFailedAttempts + "-6.png";
+}
+
+function setWordsLeft(strCategory) {
+    // This is our default for now
+    let pickedCategory;
+    
+    switch (strCategory) {
+        case "Seasons":
+            pickedCategory = objCategorySeasons.words.slice(0);
+            break;
+        case "Numbers":
+            pickedCategory = objCategoryNumbers.words.slice(0);
+            break;
+        case "Colors":
+            pickedCategory = objCategoryColors.words.slice(0);
+            break;
+        case "States":
+            pickedCategory = objCategoryStates.words.slice(0);
+            break;
+        default:
+            pickedCategory = objCategorySeasons.words.slice(0);
+    }
+    
+    wordsLeft = pickedCategory;
 }
 
 // Return the code that correlates to the number from the KeyCode table
@@ -170,10 +224,6 @@ function letterPressed(event) {
     document.getElementById(myBtn).click();
 }
 
-// Get our elements here I guess.
-document.getElementById("FullWord").innerHTML = strWord;
-document.getElementById("guessWord").innerHTML = strGuess;
-
 
 // This a function that I should full state what it does and what not.
 // HEY I NEED TO START CREATING COMMENTING COMMON PRACTICES
@@ -258,21 +308,34 @@ function setGuessWord(str)
 // When the user clicks the button, open the modal 
 function modalDefeatOn() {
     modalDefeat.style.display = "block";
-    document.getElementById("strDefeat").innerHTML = "You missed it this time. <br>The word was: <u>" + strWord + "</u>";
+    document.getElementById("strDefeat").innerHTML = "You missed it this time.<br>The word was: <u>" + strWord + "</u>";
 }
 
 function modalVictoryOn() {
+    modalVictory.style.display = "block";
+    document.getElementById("strVictory").innerHTML = "Good Job! You have found the word!";
+}
+
+function modalEndRoundWin() {
+    endRound = true;
+    document.getElementById("strVictory").innerHTML = "You have discovered all the words for this category!<br>Great Job! We'll see you back at base!";
     modalVictory.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
 function modalOff() {
     if (modalVictory.style.display == "block"){
-        newWord();
         modalVictory.style.display = "none";
+        if (!endRound) {
+            newWord();
+        } else {
+            disableAllButtons();
+            setGuessWord("VICTORY");
+        }
     } else {
         modalDefeat.style.display = "none";
         disableAllButtons();
+        setGuessWord("DEFEAT");
     }
 }
 
@@ -443,14 +506,24 @@ function enableAllButtons() {
 
 /* On to the new word */
 function newWord() {
+    // Remove the just solved word from the list
+    /*
+    wordsLeft.splice(0, 1);
+    */
+    wordsLeft.splice(wordsLeft.indexOf(strWord), 1);
+    //let frontRemain = wordsLeft.splice(0, (wordsLeft.indexOf(strWord) +1));
+    //alert(frontRemain + " &&& " + wordsLeft);
+    if (wordsLeft.length == 0){
+        modalEndRoundWin();
+        return;
+    }
+    
+    // Get and set the new word
+    strWord = getRandomWord(0, wordsLeft.length);
+    strGuess = getMyEmptyWord(strWord);
+    
     // Reset all the buttons
     enableAllButtons();
-    
-    // Get the new word and remove the last word from the list
-//    strWord = nextWord;
-    
-    strWord = wordsLeft[0];
-    strGuess = getMyEmptyWord(strWord);
     
     // Reset our GuessWord (strGuess), Tries (intFailedAttempts), and OneSwitch Counter (currBtnValue)
     setGuessWord(strGuess);
@@ -459,4 +532,9 @@ function newWord() {
     
     // Reset the picture
     document.getElementById("tryImage").src = "images/Flower_" + intFailedAttempts + "-6.png";
+}
+
+/* Random Number Generator needed to go through our current Category */
+function getRandomWord(min, max) {
+  return wordsLeft[Math.floor(Math.random() * (max - min) ) + min];
 }
