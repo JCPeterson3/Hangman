@@ -8,7 +8,15 @@
 const objCategorySeasons = {name: "Seasons", words: ["SUMMER", "WINTER", "FALL", "SPRING", "AUTUMN"]};
 const objCategoryNumbers = {name: "Numbers", words: ["ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN"]};
 const objCategoryColors = {name: "Colors", words: ["RED", "YELLOW", "BLUE", "GREEN", "WHITE", "BROWN", "PINK", "ORANGE", "PURPLE", "TOURQUOISE", "TAN", "BLACK", "BEIGE", "GREY", "VIOLET", "MAROON"]};
-const objCategoryStates = {name: "States", words: ["ALABAMA"], ["ALASKA"], ["ARIZONA"], ["ARKANSAS"], ["CALIFORNIA"], ["COLORADO"], ["CONNECTICUT"], ["DELAWARE"], ["FLORIDA"], ["GEORGIA"], ["HAWAII"], ["IDAHO"], ["ILLINOIS"], ["INDIANA"], ["IOWA"], ["KANSAS"], ["KENTUCKY"], ["LOUISIANA"], ["MAINE"], ["MARYLAND"], ["MASSACHUSETTS"], ["MICHIGAN"], ["MINNESOTA"], ["MISSISSIPPI"], ["MISSOURI"], ["MONTANA"], ["NEBRASKA"], ["NEVADA"], ["NEW HAMPSHIRE"], ["NEW JERSEY"], ["NEW MEXICO"], ["NEW YORK"], ["NORTH CAROLINA"], ["NORTH DAKOTA"], ["OHIO"], ["OKLAHOMA"], ["OREGON"], ["PENNSYLVANIA"], ["RHODE ISLAND"], ["SOUTH CAROLINA"], ["SOUTH DAKOTA"], ["TENNESSEE"], ["TEXAS"], ["UTAH"], ["VERMONT"], ["VIRGINIA"], ["WASHINGTON"], ["WEST VIRGINIA"], ["WISCONSIN"], ["WYOMING"]};
+const objCategoryStates = {name: "States", words: ["ALABAMA", "ALASKA", "ARIZONA", "ARKANSAS", "CALIFORNIA", "COLORADO", "CONNECTICUT", "DELAWARE", "FLORIDA", "GEORGIA", "HAWAII", "IDAHO", "ILLINOIS", "INDIANA", "IOWA", "KANSAS", "KENTUCKY", "LOUISIANA", "MAINE", "MARYLAND", "MASSACHUSETTS", "MICHIGAN", "MINNESOTA", "MISSISSIPPI", "MISSOURI", "MONTANA", "NEBRASKA", "NEVADA", "NEW HAMPSHIRE", "NEW JERSEY", "NEW MEXICO", "NEW YORK", "NORTH CAROLINA", "NORTH DAKOTA", "OHIO", "OKLAHOMA", "OREGON", "PENNSYLVANIA", "RHODE ISLAND", "SOUTH CAROLINA", "SOUTH DAKOTA", "TENNESSEE", "TEXAS", "UTAH", "VERMONT", "VIRGINIA", "WASHINGTON", "WEST VIRGINIA", "WISCONSIN", "WYOMING"]};
+
+// Base buttons to go through for the scanning. -- ABC --
+const baseScanningABC = ["btnKeyA", "btnKeyB", "btnKeyC", "btnKeyD", "btnKeyE", "btnKeyF", "btnKeyG", "btnKeyH", "btnKeyI", "btnKeyJ", "btnKeyK", "btnKeyL", "btnKeyM", "btnKeyN", "btnKeyO", "btnKeyP", "btnKeyQ", "btnKeyR", "btnKeyS", "btnKeyT", "btnKeyU", "btnKeyV", "btnKeyW", "btnKeyX", "btnKeyY", "btnKeyZ"];
+// Base buttons to go through for the scanning. -- QWERTY --
+const baseScanningQWERTY = ["btnKeyQ", "btnKeyW", "btnKeyE", "btnKeyR", "btnKeyT", "btnKeyY", "btnKeyU", "btnKeyI", "btnKeyO", "btnKeyP", "btnKeyA", "btnKeyS", "btnKeyD", "btnKeyF", "btnKeyG", "btnKeyH", "btnKeyJ", "btnKeyK", "btnKeyL", "btnKeyZ", "btnKeyX", "btnKeyC", "btnKeyV", "btnKeyB", "btnKeyN", "btnKeyM"];
+
+var scanBoard;
+var scanSpot = -1;
 
 let wordsLeft = objCategorySeasons.words.slice(0);
 var strWord = getRandomWord(0, wordsLeft.length);
@@ -16,10 +24,18 @@ var strGuess = getMyEmptyWord(strWord);
 document.getElementById("guessWord").innerHTML = strGuess;
 var intFailedAttempts = 6;
 var currBtnValue = 64;
+var oneSwitchGoing = false;
 var oneSwitchActivated = false;
+const strOneSwitch = "Turn One Switch:";
+const strOn = " ON";
+const strOff = " OFF";
 var endRound = false;
-// Change every 3 seconds
-setInterval(changeButton, 1000);
+// Change every x seconds (1 second default)
+var oneSwitchSpeed = 1000;
+// This will be where the id is stored so we can turn off the timer if needed
+var scanTime;
+// Turn the keyboard off when the modal is up
+var modalOn = false;
 
 // Modal Items are going here
 // Get the modal
@@ -49,25 +65,40 @@ var span = document.getElementsByClassName("close")[0];
 //     finish this and then possible make other games really quickly and then we can focus on making it look nice, while I focus on
 //     getting it on the web and then slowly moving on to the MEAN stack, such as Angular and then another part so I can slowly learn
 //     how to actually be a Full Stack Developer.
-function changeButton() {
-    if (oneSwitchActivated)
+function changeButton() {    
+    if (oneSwitchGoing)
     {
-        ++currBtnValue;
-
-        // Change the presentation of our current button
-        document.getElementById("btn" + getCode(currBtnValue)).style.backgroundColor = "#FF0000";
-        //document.getElementById("btn" + getCode(currBtnValue)).hover = true;
-        if (currBtnValue === 65){
-            // Set Z to grey
-            document.getElementById("btn" + getCode(90)).style.backgroundColor = "#e7e7e7";
-        } else {
-            document.getElementById("btn" + getCode(currBtnValue - 1)).style.backgroundColor = "#e7e7e7";
-        }
-
+        console.log("Inside if in changeButton()...");
+        
         // Set currBtnValue to before A's value if it is Z's value
         if (currBtnValue === 90){
             currBtnValue = 64;
         }
+        
+        if (scanSpot >= scanBoard.length - 1) {
+            scanSpot = -1;
+        }
+        
+        // Iterate up one through the list
+        ++currBtnValue;
+        ++scanSpot;
+
+        //currBtnValue === 65
+        if (scanSpot === 0){
+            // Set Z to grey
+            document.getElementById(scanBoard[scanBoard.length - 1]).style.backgroundColor = "#e7e7e7";
+        } else {
+            //document.getElementById("btn" + getCode(currBtnValue - 1)).style.backgroundColor = "#e7e7e7";
+            document.getElementById(scanBoard[scanSpot - 1]).style.backgroundColor = "#e7e7e7";
+        }
+        
+        // Change the presentation of our current button
+        document.getElementById(scanBoard[scanSpot]).style.backgroundColor = "#FF0000";
+        
+        //document.getElementById(baseScanningABC[scanSpot]).focus();
+        //console.log(scanSpot);
+        
+        scanTime = setTimeout(changeButton, oneSwitchSpeed);
     }
 }
 
@@ -91,6 +122,26 @@ function startRound() {
     
     // Reset the picture
     document.getElementById("tryImage").src = "images/Flower_" + intFailedAttempts + "-6.png";
+    
+    // Start the scanner if One Switch activated
+    oneSwitchActivated ? oneSwitchGoing = true : oneSwitchGoing = false;
+    
+    console.log("Round started...");
+    console.log("Is the switch activated? " + oneSwitchActivated);
+    console.log("And is the switch going? " + oneSwitchGoing);
+    
+    // Setting the speed for scanning (One Switch)
+    oneSwitchSpeed = document.getElementById("txtSwitchSpeed").value * 1000;
+    
+    // Setting the interval for the scanning (One Switch)
+    scanOff();
+    scanBegin();
+    
+    // Set the scanning equal to a copy of the selected keyboard style
+    scanBoard = baseScanningABC.slice(0);
+    
+    // Remove the focus from the button
+    document.getElementById("startBtn").blur();
 }
 
 function setWordsLeft(strCategory) {
@@ -211,19 +262,45 @@ function letterPressed(event) {
     // Use the letter pressed for finding the button
     var myBtn = "btn" + event.code;
     
-    if (event.keyCode === 192){
-        oneSwitchActivated = !oneSwitchActivated;
-    }
-    
     // Make the function call if the space bar is clicked
     if (event.keyCode === 32) {
-        var currBtn = "btn" + getCode(currBtnValue);
-        document.getElementById(currBtn).click();
+        //var currBtn = "btn" + getCode(currBtnValue);
+        //document.getElementById(currBtn).click();
+        if (oneSwitchGoing){
+            alert(scanBoard[scanSpot]);
+            document.getElementById(scanBoard[scanSpot]).click();
+            --scanSpot;
+        }
+    } else if (event.keyCode >= 65 && event.keyCode <= 90) {
+        document.getElementById(myBtn).click();
     }
-    
-    document.getElementById(myBtn).click();
 }
 
+// Turns on the scanning for OneSwitch
+function switchOneSwitch() {
+    oneSwitchActivated = !oneSwitchActivated;
+    let strMessage = strOneSwitch + (oneSwitchActivated ? strOff : strOn);
+    document.getElementById("btnOneSwitch").value = strMessage;
+}
+
+// Turns the scanning off
+function scanOff() {
+    clearTimeout(scanTime);
+    oneSwitchGoing = false;
+}
+
+// Begins scanning from the beginning
+function scanBegin() {
+    // Start the scanner if One Switch activated
+    oneSwitchActivated ? oneSwitchGoing = true : oneSwitchGoing = false;
+    
+    // Reset all scanning variables
+    scanSpot = -1;
+    currBtnValue = 64;
+    
+    // Start the scanning back up
+    scanTime = setTimeout(changeButton, oneSwitchSpeed);
+}
 
 // This a function that I should full state what it does and what not.
 // HEY I NEED TO START CREATING COMMENTING COMMON PRACTICES
@@ -239,7 +316,11 @@ function getMyEmptyWord(strWord)
     var i;
     for (i = 0; i < intLoop; i++)
         {
-            strEmpty += "_";
+            if (strWord[i] == " ") {
+                strEmpty += "  "; // Creating 2 spaces because one space is just too hard to notice
+            } else {
+                strEmpty += "_";
+            }
             // This is just to count how the things should would, will have to add spaces later by the way 
             //strEmpty += i;
         }
@@ -258,6 +339,11 @@ function testLetter(cLetter)
     
     //alert(places);
     //alert(document.getElementById("btnZ").textContent);
+    
+    // If we have a modal up then don't let anything happen on the screen behind it
+    if (modalOn) {
+        return;
+    }
     
     for (var i = 0; i < strWord.length; i++) {
         if (strWord.charAt(i) == cLetter) {
@@ -287,7 +373,8 @@ function testLetter(cLetter)
     
     var strButton = "btnKey" + cLetter;
     var button = document.getElementById(strButton);
-    button.setAttribute("disabled", "disabled");
+    button.disabled = true;
+    scanBoard.splice(scanBoard.indexOf(strButton), 1);
 }
 
 function insertLetter(intIndex, cLetter)
@@ -307,16 +394,28 @@ function setGuessWord(str)
 /* MODAL CODE SECTION */
 // When the user clicks the button, open the modal 
 function modalDefeatOn() {
-    modalDefeat.style.display = "block";
+    // Take the modalOn variable to true
+    modalOn = true;
+    
+    scanOff();
     document.getElementById("strDefeat").innerHTML = "You missed it this time.<br>The word was: <u>" + strWord + "</u>";
+    modalDefeat.style.display = "block";
 }
 
 function modalVictoryOn() {
-    modalVictory.style.display = "block";
+    // Take the modalOn variable to true
+    modalOn = true;
+    
+    scanOff();
     document.getElementById("strVictory").innerHTML = "Good Job! You have found the word!";
+    modalVictory.style.display = "block";
 }
 
 function modalEndRoundWin() {
+    // Take the modalOn variable to true
+    modalOn = true;
+    
+    scanOff();
     endRound = true;
     document.getElementById("strVictory").innerHTML = "You have discovered all the words for this category!<br>Great Job! We'll see you back at base!";
     modalVictory.style.display = "block";
@@ -324,6 +423,9 @@ function modalEndRoundWin() {
 
 // When the user clicks on <span> (x), close the modal
 function modalOff() {
+    // Take the modalOn variable to false from turning off the modal
+    modalOn = false;
+    
     if (modalVictory.style.display == "block"){
         modalVictory.style.display = "none";
         if (!endRound) {
@@ -353,7 +455,7 @@ function disableAllButtons() {
     document.getElementById("btnKeyC").disabled = true;
     
     // btnD
-    document.getElementById("btnKeyD").disabled = true;;
+    document.getElementById("btnKeyD").disabled = true;
     
     // btnE
     document.getElementById("btnKeyE").disabled = true;
@@ -427,81 +529,110 @@ function disableAllButtons() {
 function enableAllButtons() {
     // btnA
     document.getElementById("btnKeyA").disabled = false;
+    document.getElementById("btnKeyA").style.backgroundColor = "#e7e7e7";
     
     // btnB
     document.getElementById("btnKeyB").disabled = false;
+    document.getElementById("btnKeyB").style.backgroundColor = "#e7e7e7";
     
     // btnC
     document.getElementById("btnKeyC").disabled = false;
+    document.getElementById("btnKeyC").style.backgroundColor = "#e7e7e7";
     
     // btnD
     document.getElementById("btnKeyD").disabled = false;
+    document.getElementById("btnKeyD").style.backgroundColor = "#e7e7e7";
     
     // btnE
     document.getElementById("btnKeyE").disabled = false;
+    document.getElementById("btnKeyE").style.backgroundColor = "#e7e7e7";
     
     // btnF
     document.getElementById("btnKeyF").disabled = false;
+    document.getElementById("btnKeyF").style.backgroundColor = "#e7e7e7";
     
     // btnG
     document.getElementById("btnKeyG").disabled = false;
+    document.getElementById("btnKeyG").style.backgroundColor = "#e7e7e7";
     
     // btnH
     document.getElementById("btnKeyH").disabled = false;
+    document.getElementById("btnKeyH").style.backgroundColor = "#e7e7e7";
     
     // btnI
     document.getElementById("btnKeyI").disabled = false;
+    document.getElementById("btnKeyI").style.backgroundColor = "#e7e7e7";
     
     // btnJ
     document.getElementById("btnKeyJ").disabled = false;
+    document.getElementById("btnKeyJ").style.backgroundColor = "#e7e7e7";
     
     // btnK
     document.getElementById("btnKeyK").disabled = false;
+    document.getElementById("btnKeyK").style.backgroundColor = "#e7e7e7";
     
     // btnL
     document.getElementById("btnKeyL").disabled = false;
+    document.getElementById("btnKeyL").style.backgroundColor = "#e7e7e7";
     
     // btnM
     document.getElementById("btnKeyM").disabled = false;
+    document.getElementById("btnKeyM").style.backgroundColor = "#e7e7e7";
     
     // btnN
     document.getElementById("btnKeyN").disabled = false;
+    document.getElementById("btnKeyN").style.backgroundColor = "#e7e7e7";
     
     // btnO
     document.getElementById("btnKeyO").disabled = false;
+    document.getElementById("btnKeyO").style.backgroundColor = "#e7e7e7";
     
     // btnP
     document.getElementById("btnKeyP").disabled = false;
+    document.getElementById("btnKeyP").style.backgroundColor = "#e7e7e7";
     
     // btnQ
     document.getElementById("btnKeyQ").disabled = false;
+    document.getElementById("btnKeyQ").style.backgroundColor = "#e7e7e7";
     
     // btnR
     document.getElementById("btnKeyR").disabled = false;
+    document.getElementById("btnKeyR").style.backgroundColor = "#e7e7e7";
     
     // btnS
     document.getElementById("btnKeyS").disabled = false;
+    document.getElementById("btnKeyS").style.backgroundColor = "#e7e7e7";
     
     // btnT
     document.getElementById("btnKeyT").disabled = false;
+    document.getElementById("btnKeyT").style.backgroundColor = "#e7e7e7";
     
     // btnU
     document.getElementById("btnKeyU").disabled = false;
+    document.getElementById("btnKeyU").style.backgroundColor = "#e7e7e7";
     
     // btnV
     document.getElementById("btnKeyV").disabled = false;
+    document.getElementById("btnKeyV").style.backgroundColor = "#e7e7e7";
     
     // btnW
     document.getElementById("btnKeyW").disabled = false;
+    document.getElementById("btnKeyW").style.backgroundColor = "#e7e7e7";
     
     // btnX
     document.getElementById("btnKeyX").disabled = false;
+    document.getElementById("btnKeyX").style.backgroundColor = "#e7e7e7";
     
     // btnY
     document.getElementById("btnKeyY").disabled = false;
+    document.getElementById("btnKeyY").style.backgroundColor = "#e7e7e7";
     
     // btnZ
     document.getElementById("btnKeyZ").disabled = false;
+    document.getElementById("btnKeyZ").style.backgroundColor = "#e7e7e7";
+    
+    // Enable the whole board for scanning
+    scanBoard = baseScanningABC.slice(0);
 }
 
 /* On to the new word */
@@ -532,6 +663,9 @@ function newWord() {
     
     // Reset the picture
     document.getElementById("tryImage").src = "images/Flower_" + intFailedAttempts + "-6.png";
+    
+    // Start the scanning if that is turned on
+    scanBegin();
 }
 
 /* Random Number Generator needed to go through our current Category */

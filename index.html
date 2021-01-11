@@ -18,7 +18,6 @@
 <!--  If the keyboard clicks are not working then we put that code back in the body tags  -->
 <body onkeydown="letterPressed(event)">
     
-    
     <form>  
         <label> Choose a Category: </label>  
         <select id="categorySelector">
@@ -27,7 +26,13 @@
             <option value = "Colors"> Colors </option>
             <option value = "States"> States </option>
         </select>
-        <input type="button" onclick="startRound()" value="Start Round">
+        <br>
+        <!-- typing input goes here -->
+        <input type="button" id="btnOneSwitch" onclick="switchOneSwitch()" value="Turn One Switch: ON">
+        <label> Scanning Speed (in seconds): </label>
+        <input type="number" id="txtSwitchSpeed" min="1" max="15" value="1" onkeydown="return false">
+        <br>
+        <input type="button" id="startBtn" onclick="startRound()" value="Start Round">
     </form>
     
     <div class="container">
@@ -53,11 +58,11 @@
         </div>
         
         <div class="guessWord">
-            <p id="guessWord"></p>
+            <pre id="guessWord"></pre>
         </div>
 
         <div class="triesSection">
-            <img id="tryImage" src="images/Flower_6-6.png" alt="Flower 6-6" height="400">
+            <img id="tryImage" src="images/Flower_6-6.png" alt="Flower" height="400">
         </div>
         
         <div class="keyboard">

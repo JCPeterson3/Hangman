@@ -1,4 +1,4 @@
-body, html {
+body, html, pre {
     margin: 0px;
     padding: 0px;
     
@@ -92,13 +92,17 @@ button {
 }
 
 .keyboardButton:disabled {
-    background-color: black;
-    color: green;
+    background-color: black !important;
+    color: green!important;
 }
 
-.keyboardButton:hover {
+/* -- NOTE: Turning this off because hovering doesn't play well with scanning. -- */
+/*
+.keyboardButton:hover,
+.keyboardButton:focus {
     background-color: #FF0000;
 }
+*/
 
 /* Modal Background -- Changing the view of the rest of the screen */
 .modal {
