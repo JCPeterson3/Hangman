@@ -35,7 +35,7 @@ var oneSwitchSpeed = 1000;
 // This will be where the id is stored so we can turn off the timer if needed
 var scanTime;
 // Turn the keyboard off when the modal is up
-var modalOn = false;
+var modalIsOn = false;
 
 // Modal Items are going here
 // Get the modal
@@ -262,12 +262,16 @@ function letterPressed(event) {
     // Use the letter pressed for finding the button
     var myBtn = "btn" + event.code;
     
+    if (modalIsOn) {
+        modalOff();
+        return;
+    }
+    
     // Make the function call if the space bar is clicked
     if (event.keyCode === 32) {
         //var currBtn = "btn" + getCode(currBtnValue);
         //document.getElementById(currBtn).click();
         if (oneSwitchGoing){
-            alert(scanBoard[scanSpot]);
             document.getElementById(scanBoard[scanSpot]).click();
             --scanSpot;
         }
@@ -336,19 +340,16 @@ function testLetter(cLetter)
 {
     var places = "#";
     var bFound = false;
-    
-    //alert(places);
-    //alert(document.getElementById("btnZ").textContent);
-    
+        
     // If we have a modal up then don't let anything happen on the screen behind it
-    if (modalOn) {
+    if (modalIsOn) {
         return;
     }
     
     for (var i = 0; i < strWord.length; i++) {
         if (strWord.charAt(i) == cLetter) {
             places += i + " ";
-            //alert("k");
+            
             bFound = true;
             // Insert the letter we found into all the appropriate places
             insertLetter(i, cLetter);
@@ -379,8 +380,6 @@ function testLetter(cLetter)
 
 function insertLetter(intIndex, cLetter)
 {
-    //alert(intIndex + " = " + cLetter);
-    //alert(strGuess.substring(0, intIndex) + cLetter + strGuess.substring((intIndex+1), strGuess.length));
     strGuess = strGuess.substring(0, intIndex) + cLetter + strGuess.substring((intIndex+1), strGuess.length);
     setGuessWord(strGuess);
     
@@ -394,8 +393,8 @@ function setGuessWord(str)
 /* MODAL CODE SECTION */
 // When the user clicks the button, open the modal 
 function modalDefeatOn() {
-    // Take the modalOn variable to true
-    modalOn = true;
+    // Take the modalIsOn variable to true
+    modalIsOn = true;
     
     scanOff();
     document.getElementById("strDefeat").innerHTML = "You missed it this time.<br>The word was: <u>" + strWord + "</u>";
@@ -403,8 +402,8 @@ function modalDefeatOn() {
 }
 
 function modalVictoryOn() {
-    // Take the modalOn variable to true
-    modalOn = true;
+    // Take the modalIsOn variable to true
+    modalIsOn = true;
     
     scanOff();
     document.getElementById("strVictory").innerHTML = "Good Job! You have found the word!";
@@ -412,8 +411,8 @@ function modalVictoryOn() {
 }
 
 function modalEndRoundWin() {
-    // Take the modalOn variable to true
-    modalOn = true;
+    // Take the modalIsOn variable to true
+    modalIsOn = true;
     
     scanOff();
     endRound = true;
@@ -423,8 +422,8 @@ function modalEndRoundWin() {
 
 // When the user clicks on <span> (x), close the modal
 function modalOff() {
-    // Take the modalOn variable to false from turning off the modal
-    modalOn = false;
+    // Take the modalIsOn variable to false from turning off the modal
+    modalIsOn = false;
     
     if (modalVictory.style.display == "block"){
         modalVictory.style.display = "none";
@@ -638,12 +637,8 @@ function enableAllButtons() {
 /* On to the new word */
 function newWord() {
     // Remove the just solved word from the list
-    /*
-    wordsLeft.splice(0, 1);
-    */
     wordsLeft.splice(wordsLeft.indexOf(strWord), 1);
-    //let frontRemain = wordsLeft.splice(0, (wordsLeft.indexOf(strWord) +1));
-    //alert(frontRemain + " &&& " + wordsLeft);
+    
     if (wordsLeft.length == 0){
         modalEndRoundWin();
         return;
