@@ -3,103 +3,30 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Getting a Google Font from google API (still don't understand this, fyi) -->
-        <!-- Suggestion is to look at different Google Fonts with Mom at some point to figure this shit out. -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy">
+    <title>Jayope - OneSwitch Games</title>
+    <link rel="stylesheet" href="index_styles.css">
     
+    <!-- Getting a Google Font from google API (still don't understand this, fyi) -->    
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
     
 </head>
     
-<!-- Within the body tag we had onkeydown="letterPressed(event)" -->
-<!--  If the keyboard clicks are not working then we put that code back in the body tags  -->
-<body onkeydown="letterPressed(event)">
-    
-    <form>  
-        <label> Choose a Category: </label>  
-        <select id="categorySelector">
-            <option value = "Seasons"> Seasons </option>
-            <option value = "Numbers"> Numbers </option>
-            <option value = "Colors"> Colors </option>
-            <option value = "States"> States </option>
-        </select>
-        <br>
-        <!-- typing input goes here -->
-        <input type="button" id="btnOneSwitch" onclick="switchOneSwitch()" value="Turn One Switch: ON">
-        <label> Scanning Speed (in seconds): </label>
-        <input type="number" id="txtSwitchSpeed" min="1" max="15" value="1" onkeydown="return false">
-        <br>
-        <input type="button" id="startBtn" onclick="startRound()" value="Start Round">
-    </form>
-    
-    <div class="container">
-        
-        <!-- Modals have to go here, so they can be guided to where we wish to put them. -->
-        <!-- Currently needs the mouse to move on, but should make it so that the oneSwitch key (currently the space bar) does the same as the mouse click -->
-        <div id="modalDefeat" class="modal" onkeydown="modalOff()"> <!-- onclick="modalOff()" -->
-            <div class="modal-content">
-                <span class="close" onclick="modalOff()">&times;</span>
-                <p id="strDefeat">DEFEAT</p>
-            </div>
-        </div>
-        <div id="modalVictory" class="modal" onkeydown="modalOff()"> <!-- onclick="modalOff()" -->
-            <div class="modal-content">
-                <span class="close" onclick="modalOff()">&times;</span>
-                <p id="strVictory">Good Job! You have found the word!</p>
-            </div>
-        </div>
-        
-        
-        <div class="header-row">
-            <h1>Hangman Tester</h1>
-        </div>
-        
-        <div class="guessWord">
-            <pre id="guessWord"></pre>
-        </div>
-
-        <div class="triesSection">
-            <img id="tryImage" src="images/Flower_6-6.png" alt="Flower" height="400">
-        </div>
-        
-        <div class="keyboard">
-            <button class="keyboardButton" id="btnKeyA" onclick="testLetter('A')">A</button>
-            <button class="keyboardButton" id="btnKeyB" onclick="testLetter('B')">B</button>
-            <button class="keyboardButton" id="btnKeyC" onclick="testLetter('C')">C</button>
-            <button class="keyboardButton" id="btnKeyD" onclick="testLetter('D')">D</button>
-            <button class="keyboardButton" id="btnKeyE" onclick="testLetter('E')">E</button>
-            <button class="keyboardButton" id="btnKeyF" onclick="testLetter('F')">F</button>
-            <button class="keyboardButton" id="btnKeyG" onclick="testLetter('G')">G</button>
-            <button class="keyboardButton" id="btnKeyH" onclick="testLetter('H')">H</button>
-            <button class="keyboardButton" id="btnKeyI" onclick="testLetter('I')">I</button>
-            <button class="keyboardButton" id="btnKeyJ" onclick="testLetter('J')">J</button>
-            <button class="keyboardButton" id="btnKeyK" onclick="testLetter('K')">K</button>
-            <button class="keyboardButton" id="btnKeyL" onclick="testLetter('L')">L</button>
-            <button class="keyboardButton" id="btnKeyM" onclick="testLetter('M')">M</button>
-            <button class="keyboardButton" id="btnKeyN" onclick="testLetter('N')">N</button>
-            <button class="keyboardButton" id="btnKeyO" onclick="testLetter('O')">O</button>
-            <button class="keyboardButton" id="btnKeyP" onclick="testLetter('P')">P</button>
-            <button class="keyboardButton" id="btnKeyQ" onclick="testLetter('Q')">Q</button>
-            <button class="keyboardButton" id="btnKeyR" onclick="testLetter('R')">R</button>
-            <button class="keyboardButton" id="btnKeyS" onclick="testLetter('S')">S</button>
-            <button class="keyboardButton" id="btnKeyT" onclick="testLetter('T')">T</button>
-            <button class="keyboardButton" id="btnKeyU" onclick="testLetter('U')">U</button>
-            <button class="keyboardButton" id="btnKeyV" onclick="testLetter('V')">V</button>
-            <button class="keyboardButton" id="btnKeyW" onclick="testLetter('W')">W</button>
-            <button class="keyboardButton" id="btnKeyX" onclick="testLetter('X')">X</button>
-            <button class="keyboardButton" id="btnKeyY" onclick="testLetter('Y')">Y</button>
-            <button class="keyboardButton" id="btnKeyZ" onclick="testLetter('Z')">Z</button>
-        </div>
+<body>
+    <div class="header">
+        <h1>Name of Site</h1>
     </div>
     
-    <!-- Delete this later because it is solely for testing the modal for defeat and vicroty -->
-<!--    <button id="btnDefeat" onclick="modalVictoryOn()">TEST</button>-->
+    <div class="navbar">
+        <h3>Navbar</h3>
+    </div>
     
-    <!-- SCRIPT CODE BELOW :: This is where we make the magic happen -->
-    <script src="main.js"></script>
+    <div class="center-1">
+        <a href="hangman.html"><button>Play Word Explorer</button></a>
+    </div>
     
+    <div class="footer">
+        <p>Literally no idea what to put in this but it will be the footer.</p>
+    </div>
 </body>
 </html>
