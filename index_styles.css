@@ -1,11 +1,21 @@
-/*HEADER for now*/
-h1 {
-    font-size: 3rem;
+body {
+/*    background-color: #737d7d;*/
+    background-color: #a1aaaa;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
 }
 
-/*NAVBAR for now*/
-h3 {
-    font-size: 1.25rem;
+hr {
+    margin: 0px 100px 50px;
+    box-shadow: 0 0 10px 1px black;
+}
+
+/*HEADER for now*/
+h1 {
+    font-size: 4rem;
+    font-family: 'Lakki Reddy', cursive;
+    margin: 0px;
+    padding: 0px;
 }
 
 .header {
@@ -16,20 +26,35 @@ h3 {
 .navbar {
     display: block;
     color: darkgray;
-    background-color: darkslategrey;
     text-align: center;
 }
 
 .center-1 {
     display: block;
-    background-color: blue;
     width: 80%;
     text-align: left;
+    /* Padding should go here instead of Margin */
     margin-left: 20%;
+    height: 650px;
+}
+
+.gameLink {
+    color: #008ee6 !important;
+    text-decoration: none;
+}
+
+.gameLink:hover {
+    text-decoration: underline;
+}
+
+.gameDescription{
+    margin: 0px;
 }
 
 .footer {
+/*    background-color: #555e5e;*/
     display: block;
     text-align: center;
     width: 100%;
+    font-weight: 500;
 }
