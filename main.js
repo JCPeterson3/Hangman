@@ -142,6 +142,10 @@ function startRound() {
     
     // Remove the focus from the button
     document.getElementById("startBtn").blur();
+    
+    //Hide the setting screen and show the game
+    document.getElementById("formSettings").style.display = "none";
+    document.getElementById("gameBox").style.display = "grid";
 }
 
 function setWordsLeft(strCategory) {

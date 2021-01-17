@@ -14,7 +14,9 @@
 <!-- Within the body tag we had onkeydown="letterPressed(event)" -->
 <body onkeydown="letterPressed(event)">
     
-    <form>  
+    <form class="formSettings" id="formSettings">
+        <h1>Word Explorer</h1>
+        <br><br><br>
         <label> Choose a Category: </label>  
         <select id="categorySelector">
             <option value = "Seasons"> Seasons </option>
@@ -22,16 +24,17 @@
             <option value = "Colors"> Colors </option>
             <option value = "States"> States </option>
         </select>
-        <br>
+        <br><br>
         <!-- typing input goes here -->
         <input type="button" id="btnOneSwitch" onclick="switchOneSwitch()" value="Turn One Switch: ON">
+        <br>
         <label> Scanning Speed (in seconds): </label>
         <input type="number" id="txtSwitchSpeed" min="1" max="15" value="1" onkeydown="return false">
-        <br>
+        <br><br>
         <input type="button" id="startBtn" onclick="startRound()" value="Start Round">
     </form>
     
-    <div class="container">
+    <div class="container" id="gameBox">
         
         <!-- Modals have to go here, so they can be guided to where we wish to put them. -->
         <!-- Currently needs the mouse to move on, but should make it so that the oneSwitch key (currently the space bar) does the same as the mouse click -->
@@ -50,7 +53,7 @@
         
         
         <div class="header-row">
-            <h1>Hangman Tester</h1>
+            <h1>Word Explorer</h1>
         </div>
         
         <div class="guessWord">
@@ -90,9 +93,6 @@
             <button class="keyboardButton" id="btnKeyZ" onclick="testLetter('Z')">Z</button>
         </div>
     </div>
-    
-    <!-- Delete this later because it is solely for testing the modal for defeat and vicroty -->
-<!--    <button id="btnDefeat" onclick="modalVictoryOn()">TEST</button>-->
     
     <!-- SCRIPT CODE BELOW :: This is where we make the magic happen -->
     <script src="main.js"></script>
