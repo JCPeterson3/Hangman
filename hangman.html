@@ -8,15 +8,20 @@
     <!-- Getting a Google Font from google API (still don't understand this, fyi) -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lakki+Reddy&display=swap" rel="stylesheet">
     
 </head>
 
 <!-- Within the body tag we had onkeydown="letterPressed(event)" -->
 <body onkeydown="letterPressed(event)">
     
+    <div class="header">
+        <h1><a href="index.html">Jayope Games</a></h1>
+    </div>
+    
     <form class="formSettings" id="formSettings">
         <h1>Word Explorer</h1>
-        <br><br><br>
+        <br><br>
         <label> Choose a Category: </label>  
         <select id="categorySelector">
             <option value = "Seasons"> Seasons </option>
@@ -26,7 +31,7 @@
         </select>
         <br><br>
         <!-- typing input goes here -->
-        <input type="button" id="btnOneSwitch" onclick="switchOneSwitch()" value="Turn One Switch: ON">
+        <input type="button" id="btnOneSwitch" onclick="switchOneSwitch()" value="One Switch: OFF">
         <br>
         <label> Scanning Speed (in seconds): </label>
         <input type="number" id="txtSwitchSpeed" min="1" max="15" value="1" onkeydown="return false">
@@ -51,13 +56,14 @@
             </div>
         </div>
         
+        <!-- THE GAME SCREEN -->
         
         <div class="header-row">
             <h1>Word Explorer</h1>
         </div>
         
         <div class="guessWord">
-            <pre id="guessWord"></pre>
+            <p id="guessWord"></p>
         </div>
 
         <div class="triesSection">

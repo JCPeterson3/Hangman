@@ -9,6 +9,7 @@ const objCategorySeasons = {name: "Seasons", words: ["SUMMER", "WINTER", "FALL",
 const objCategoryNumbers = {name: "Numbers", words: ["ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN"]};
 const objCategoryColors = {name: "Colors", words: ["RED", "YELLOW", "BLUE", "GREEN", "WHITE", "BROWN", "PINK", "ORANGE", "PURPLE", "TOURQUOISE", "TAN", "BLACK", "BEIGE", "GREY", "VIOLET", "MAROON"]};
 const objCategoryStates = {name: "States", words: ["ALABAMA", "ALASKA", "ARIZONA", "ARKANSAS", "CALIFORNIA", "COLORADO", "CONNECTICUT", "DELAWARE", "FLORIDA", "GEORGIA", "HAWAII", "IDAHO", "ILLINOIS", "INDIANA", "IOWA", "KANSAS", "KENTUCKY", "LOUISIANA", "MAINE", "MARYLAND", "MASSACHUSETTS", "MICHIGAN", "MINNESOTA", "MISSISSIPPI", "MISSOURI", "MONTANA", "NEBRASKA", "NEVADA", "NEW HAMPSHIRE", "NEW JERSEY", "NEW MEXICO", "NEW YORK", "NORTH CAROLINA", "NORTH DAKOTA", "OHIO", "OKLAHOMA", "OREGON", "PENNSYLVANIA", "RHODE ISLAND", "SOUTH CAROLINA", "SOUTH DAKOTA", "TENNESSEE", "TEXAS", "UTAH", "VERMONT", "VIRGINIA", "WASHINGTON", "WEST VIRGINIA", "WISCONSIN", "WYOMING"]};
+//const objCategoryStates = {name: "States", words: ["NEW JERSEY"]};
 
 // Base buttons to go through for the scanning. -- ABC --
 const baseScanningABC = ["btnKeyA", "btnKeyB", "btnKeyC", "btnKeyD", "btnKeyE", "btnKeyF", "btnKeyG", "btnKeyH", "btnKeyI", "btnKeyJ", "btnKeyK", "btnKeyL", "btnKeyM", "btnKeyN", "btnKeyO", "btnKeyP", "btnKeyQ", "btnKeyR", "btnKeyS", "btnKeyT", "btnKeyU", "btnKeyV", "btnKeyW", "btnKeyX", "btnKeyY", "btnKeyZ"];
@@ -26,7 +27,7 @@ var intFailedAttempts = 6;
 var currBtnValue = 64;
 var oneSwitchGoing = false;
 var oneSwitchActivated = false;
-const strOneSwitch = "Turn One Switch:";
+const strOneSwitch = "One Switch:";
 const strOn = " ON";
 const strOff = " OFF";
 var endRound = false;
@@ -126,10 +127,6 @@ function startRound() {
     // Start the scanner if One Switch activated
     oneSwitchActivated ? oneSwitchGoing = true : oneSwitchGoing = false;
     
-    console.log("Round started...");
-    console.log("Is the switch activated? " + oneSwitchActivated);
-    console.log("And is the switch going? " + oneSwitchGoing);
-    
     // Setting the speed for scanning (One Switch)
     oneSwitchSpeed = document.getElementById("txtSwitchSpeed").value * 1000;
     
@@ -146,6 +143,12 @@ function startRound() {
     //Hide the setting screen and show the game
     document.getElementById("formSettings").style.display = "none";
     document.getElementById("gameBox").style.display = "grid";
+}
+
+function gameMenu() {
+    // Return to the gameMenu
+    document.getElementById("formSettings").style.display = "block";
+    document.getElementById("gameBox").style.display = "none";
 }
 
 function setWordsLeft(strCategory) {
@@ -287,7 +290,7 @@ function letterPressed(event) {
 // Turns on the scanning for OneSwitch
 function switchOneSwitch() {
     oneSwitchActivated = !oneSwitchActivated;
-    let strMessage = strOneSwitch + (oneSwitchActivated ? strOff : strOn);
+    let strMessage = strOneSwitch + (oneSwitchActivated ? strOn : strOff);
     document.getElementById("btnOneSwitch").value = strMessage;
 }
 
@@ -325,10 +328,11 @@ function getMyEmptyWord(strWord)
     for (i = 0; i < intLoop; i++)
         {
             if (strWord[i] == " ") {
-                strEmpty += "  "; // Creating 2 spaces because one space is just too hard to notice
+                strEmpty += " "; // 2 or 1 space here
             } else {
                 strEmpty += "_";
             }
+            //console.log(strEmpty + "*" + strWord[i] + "*");
             // This is just to count how the things should would, will have to add spaces later by the way 
             //strEmpty += i;
         }
@@ -351,7 +355,7 @@ function testLetter(cLetter)
     }
     
     for (var i = 0; i < strWord.length; i++) {
-        if (strWord.charAt(i) == cLetter) {
+        if (strWord.charAt(i) === cLetter) {
             places += i + " ";
             
             bFound = true;
@@ -401,7 +405,7 @@ function modalDefeatOn() {
     modalIsOn = true;
     
     scanOff();
-    document.getElementById("strDefeat").innerHTML = "You missed it this time.<br>The word was: <u>" + strWord + "</u>";
+    document.getElementById("strDefeat").innerHTML = "You missed it this time.<br>The word was: <u>" + strWord + "</u><br>Feel free to try again!";
     modalDefeat.style.display = "block";
 }
 
@@ -434,13 +438,13 @@ function modalOff() {
         if (!endRound) {
             newWord();
         } else {
-            disableAllButtons();
-            setGuessWord("VICTORY");
+            // Here we go back to the game menu
+            gameMenu();
         }
     } else {
         modalDefeat.style.display = "none";
-        disableAllButtons();
-        setGuessWord("DEFEAT");
+        // Here we go back to the game menu
+        gameMenu();
     }
 }
 

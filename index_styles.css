@@ -12,15 +12,14 @@ hr {
 
 /*HEADER for now*/
 h1 {
-    font-size: 4rem;
-    font-family: 'Lakki Reddy', cursive;
     margin: 0px;
-    padding: 0px;
 }
 
 .header {
     display: block;
     text-align: center;
+    font-family: 'Lakki Reddy', cursive;
+    font-size: 2rem;
 }
 
 .navbar {
@@ -40,7 +39,8 @@ h1 {
 
 .gameLink {
     /* #085e5e */
-    color: #008ee6 !important;
+/*    color: #008ee6 !important;*/
+    color: #0033FF !important;
     text-decoration: none;
 }
 
