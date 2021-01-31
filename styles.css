@@ -130,7 +130,7 @@ form {
     font-family: inherit;
     font-size: 1.75rem;
     
-    width: 130px;
+    width: 6.5vw;
     height: 75px;
     border: 2px solid rgb(106, 163, 137);
     border-radius: 1em;
@@ -199,11 +199,11 @@ form {
 /* X-Large devices (desktops) */
 @media (max-width: 1400px) {
     .keyboard {
-        padding: 50px 25px;
+        padding: 50px 0px;
     }
     
     .keyboardButton {
-        width: 95px;
+        width: 7vw;
         height: 65px;
         margin: 2px;
     }
@@ -224,7 +224,7 @@ form {
     }
     
     .keyboardButton {
-        width: 75px;
+        width: 7vw;
         height: 55px;
         margin: 2px 0px;
     }
@@ -237,7 +237,7 @@ form {
     }
     
     .keyboardButton {
-        width: 55px;
+        width: 7.25vw;
         height: 55px;
         margin: 2px 0px;
     }
