@@ -6,7 +6,7 @@ body {
 }
 
 hr {
-    margin: 0px 100px 50px;
+    margin: 0px 50px 50px;
     box-shadow: 0 0 10px 1px black;
 }
 
@@ -30,11 +30,10 @@ h1 {
 
 .center-1 {
     display: block;
-    width: 80%;
+    width: 60%;
     text-align: left;
     /* Padding should go here instead of Margin */
     margin-left: 20%;
-    height: 650px;
 }
 
 .gameLink {
@@ -48,14 +47,74 @@ h1 {
     text-decoration: underline;
 }
 
-.gameDescription{
+.gameDescription {
     margin: 0px;
 }
 
 .footer {
 /*    background-color: #555e5e;*/
     display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     text-align: center;
     width: 100%;
     font-weight: 500;
+}
+
+
+/* -------------------- MEDIA QUERIES -------------------- */
+
+
+/* X-Large devices (desktops) */
+@media (max-width: 1400px) {
+    hr {
+        margin: 0px 40px 40px;
+    }
+}
+
+/* Large devices (desktops/laptops?) */
+@media (max-width: 1200px) {
+    hr {
+        margin: 0px 20px 40px;
+    }
+    
+    .header {
+        font-size: 3vw;
+    }
+    
+    .center-1 {
+        
+    }
+}
+
+/* Medium devices (tablets) */
+@media (max-width: 992px) {
+    hr {
+        margin: 0px 10px 20px;
+    }
+    
+    .header {
+        font-size: 4vw;
+    }
+    
+    .center-1 {
+        
+    }
+}
+
+/* Small devices (phones - portrait is 576px and less; landscape is 768px and less) */
+@media (max-width: 768px) {
+    hr {
+        margin: 0px 10px 15px;
+    }
+    
+    .header {
+        font-size: 5vw;
+    }
+    
+    .center-1 {
+        width: 80%;
+        margin-left: 10%;
+    }
 }
